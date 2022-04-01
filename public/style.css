@@ -41,8 +41,13 @@ body {
     flex: 2;
 }
 
+.q-play {
+    width: 400px;
+}
+
 .l-play {
     background: linear-gradient(180deg, #FFBF1A 0%, #FFDD63 41.46%, rgba(255, 230, 0, 0) 100%);
+    width: 400px;
 }
 
 .text-small {
