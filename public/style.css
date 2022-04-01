@@ -1,0 +1,50 @@
+@font-face {
+    font-family: kanit;
+    src: url(font/Kanit/Kanit-Light.ttf);
+}
+
+:root {
+    --color1: ;
+    --color2: #f2e8dc;
+    --color3: #f7d9c9;
+    --menu1: #f7f3f0;
+    --menu2: #ecd3ce;
+    --menu3: #f8d8c8;
+}
+
+body {
+    margin: 0;
+    font-family: kanit;
+}
+
+.score-board {
+    /* background-color: darkkhaki; */
+    background: linear-gradient(180deg, #FFBF1A 0%, #FFDD63 41.46%, rgba(255, 230, 0, 0) 100%);
+}
+
+.span-time {
+    font-size: 30pt;
+}
+
+.btn-light {
+    font-size: 20pt !important;
+}
+
+.start-div {
+    font-size: 20pt;
+    /* position: absolute; */
+    border: 4px solid #0E8BFE;
+    box-sizing: border-box;
+    border-radius: 16px;
+    width: 752px;
+    height: 426px;
+    flex: 2;
+}
+
+.l-play {
+    background: linear-gradient(180deg, #FFBF1A 0%, #FFDD63 41.46%, rgba(255, 230, 0, 0) 100%);
+}
+
+.text-small {
+    font-size: 10pt;
+}
