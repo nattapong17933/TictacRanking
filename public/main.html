@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TictacRanking</title>
+    <link rel="stylesheet" href="ball.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <!--font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand" style="font-size: 30px; font-family: 'Kalam', cursive;" >
+                <img src="/picture/logo.png" alt="" width="60" height="60" class="d-inline-block" style="vertical-align: text-bottom;">
+                TictacRanking
+            </a>
+            <nav>
+                <button type="button" id="btnSigup" class="btn btn-outline-light logged-out" data-bs-toggle="modal" data-bs-target="#modal-signup">Login</button>
+                <!-- <button type="button" id="btnLogin" class="btn btn-outline-light logged-out" data-bs-toggle="modal" data-bs-target="#modal-login"><i class="bi bi-box-arrow-in-right"></i> Sign in</button> -->
+
+                <span class="logged-in">
+                    <span class="display-name" id="user-profile-name" style="color: white;"></span>
+                    <span class="me-2 display-name" id="user-score" style="color: white;"></span>
+                </span>
+
+                <!-- <button type="button" id="btnLogout" class="btn btn-outline-light logged-in"><i class="bi bi-box-arrow-right"></i> Logout</button> -->
+                <a class="p-4" href=""><svg width="36" height="36" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M39.4473 2.26023C39.7311 2.81052 39.8016 3.51525 39.9423 4.92468C40.2091 7.59247 40.3427 8.92641 40.9011 9.65827C41.6092 10.5866 42.7611 11.0637 43.9184 10.9081C44.8307 10.7853 45.868 9.93644 47.9432 8.23867C49.0394 7.34174 49.5873 6.89327 50.1772 6.70483C50.9263 6.46554 51.7369 6.50594 52.4584 6.81862C53.0265 7.06481 53.5273 7.56557 54.529 8.56715L57.4328 11.4709C58.4342 12.4725 58.935 12.9733 59.1813 13.5414C59.494 14.263 59.5343 15.0735 59.2951 15.8226C59.1066 16.4124 58.6581 16.9605 57.7611 18.0568C56.0633 20.132 55.2144 21.1695 55.0919 22.0818C54.9362 23.239 55.4133 24.3908 56.3415 25.099C57.0734 25.6573 58.4072 25.7907 61.0751 26.0575C62.4846 26.1985 63.1896 26.269 63.7398 26.5527C64.4386 26.9134 64.9832 27.515 65.2722 28.2462C65.5 28.8221 65.5 29.5303 65.5 30.9467V35.0537C65.5 36.4697 65.5 37.1779 65.2725 37.7534C64.9833 38.485 64.4385 39.0869 63.7395 39.4473C63.1892 39.7311 62.4846 39.8016 61.0754 39.9423C58.4085 40.2091 57.075 40.3424 56.3431 40.9004C55.4143 41.6089 54.9372 42.7611 55.0932 43.9187C55.216 44.8307 56.0646 45.8677 57.7617 47.9422C58.6584 49.0381 59.1066 49.586 59.2951 50.1756C59.5346 50.925 59.494 51.7356 59.1813 52.4574C58.935 53.0255 58.4345 53.526 57.4332 54.5274L54.529 57.4316C53.5276 58.4329 53.0268 58.9337 52.4587 59.1801C51.7369 59.4927 50.9267 59.533 50.1776 59.2938C49.5877 59.1053 49.0394 58.6568 47.9432 57.7598C45.868 56.062 44.8307 55.2131 43.9184 55.0906C42.7611 54.9349 41.6092 55.412 40.9011 56.3402C40.3427 57.0721 40.2095 58.4062 39.9426 61.0745C39.8016 62.4846 39.7311 63.1896 39.447 63.7401C39.0866 64.4389 38.485 64.9829 37.7541 65.2722C37.1782 65.5 36.4697 65.5 35.0527 65.5H30.9467C29.5303 65.5 28.8221 65.5 28.2462 65.2722C27.515 64.9832 26.9134 64.4386 26.5527 63.7398C26.269 63.1896 26.1985 62.4846 26.0575 61.0751C25.7907 58.4072 25.6573 57.0734 25.099 56.3415C24.3908 55.4133 23.239 54.9362 22.0819 55.0919C21.1695 55.2144 20.1319 56.0633 18.0568 57.7614H18.0567C16.9604 58.6584 16.4122 59.1069 15.8224 59.2951C15.0733 59.5346 14.2629 59.494 13.5413 59.1813C12.9732 58.9353 12.4723 58.4345 11.4707 57.4328L8.56705 54.529C7.56544 53.5276 7.06461 53.0268 6.81845 52.4587C6.50581 51.7369 6.46538 50.9267 6.70467 50.1776C6.89311 49.5877 7.34161 49.0394 8.23858 47.9432C9.93641 45.868 10.7853 44.8307 10.908 43.918C11.0637 42.7611 10.5866 41.6092 9.65824 40.9011C8.92637 40.3427 7.59247 40.2091 4.92465 39.9423C3.51522 39.8016 2.81052 39.7311 2.26023 39.4473C1.56132 39.0866 1.01682 38.485 0.727663 37.7538C0.5 37.1779 0.5 36.4697 0.5 35.0533V30.947C0.5 29.5303 0.5 28.8218 0.72776 28.2459C1.01691 27.515 1.56126 26.9134 2.25994 26.553C2.81036 26.269 3.51525 26.1985 4.92504 26.0575H4.92507C7.59358 25.7906 8.92787 25.6572 9.65986 25.0986C10.5878 24.3905 11.0648 23.2391 10.9093 22.0821C10.7867 21.1696 9.93751 20.1317 8.23916 18.0559C7.34177 16.9591 6.89311 16.4107 6.70471 15.8207C6.4656 15.0718 6.506 14.2617 6.81842 13.5404C7.06461 12.972 7.5656 12.471 8.56757 11.469L11.4709 8.56575H11.4709C12.4725 7.5641 12.9733 7.06328 13.5415 6.81712C14.263 6.50447 15.0735 6.46408 15.8225 6.70334C16.4124 6.89178 16.9606 7.34034 18.0571 8.23747C20.132 9.93508 21.1694 10.7839 22.0814 10.9067C23.239 11.0626 24.3912 10.5854 25.0995 9.65662C25.6575 8.92488 25.7909 7.59134 26.0576 4.92426C26.1985 3.51522 26.2689 2.81068 26.5527 2.26052C26.9131 1.56138 27.515 1.01668 28.2466 0.727532C28.8221 0.5 29.5303 0.5 30.9463 0.5H35.0533C36.4697 0.5 37.1779 0.5 37.7538 0.727663C38.485 1.01682 39.0866 1.56132 39.4473 2.26023ZM33 46C40.1796 46 46 40.1796 46 33C46 25.8203 40.1796 20 33 20C25.8203 20 20 25.8203 20 33C20 40.1796 25.8203 46 33 46Z" fill="white"/>
+                    </svg>
+                </a>
+            </nav>
+        </div>
+    </nav>
+    <div class="container-fluid" style="min-height: 85vh; display: flex;">
+        <div class="left">
+            <div class="box">
+                <div class="quick">
+                    <h3 style="margin-top: 10%; color: #FFCC0A; font-family: 'Kalam', cursive;">Quick Play</h3>
+                    <svg class="m-2" width="88" height="88" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 43.9748C0 19.6882 19.6993 0 44 0C68.3007 0 88 19.6882 88 43.9748C88 68.2617 68.3007 87.9497 44 87.9497C19.6993 87.9497 0 68.2617 0 43.9748Z" fill="#CFCFCF"/>
+                        <path d="M43.9999 53.747C54.8001 53.747 63.5554 44.9967 63.5554 34.2026C63.5554 23.4086 54.8001 14.6583 43.9999 14.6583C33.1997 14.6583 24.4443 23.4086 24.4443 34.2026C24.4443 44.9967 33.1997 53.747 43.9999 53.747Z" fill="white"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M74.4134 74.4943C74.6979 74.9654 74.6109 75.5683 74.2109 75.9455C66.3296 83.387 55.6982 87.9497 44.0001 87.9497C32.3024 87.9497 21.6706 83.3875 13.7897 75.946C13.3898 75.5683 13.3027 74.9659 13.5873 74.4948C19.2789 65.073 30.7619 58.6331 44.0006 58.6331C57.2387 58.6331 68.7217 65.0725 74.4134 74.4943Z" fill="white"/>
+                    </svg>
+                    <div class="input-group mb-2"  style="max-width: 20vw; margin: auto; font-family: 'Kalam', cursive; color: black;">
+                        <span class="input-group-text" id="basic-addon1"> <i class="bi bi-terminal-fill"></i></span>
+                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="d-grid gap-2" style="max-width: 20vw; margin: auto; font-family: 'Kalam', cursive;">
+                        <button class="btnfind" type="button">Find Opponent </button>
+                        <button class="btn btn-success" type="button">Play with a Friand</button>
+                    </div>
+                </div>
+                <div class="create">
+                    <h3 style="margin-top: 10%; color: white; font-family: 'Kalam', cursive;">Login</h3>
+                    <div class="share" style="margin-top: 5%;">
+                        <div class="share1">
+                            <svg width="81" height="81" viewBox="0 0 81 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="40.5" cy="40.5" r="40.5" fill="#0E8BFE"/>
+                                <path d="M51 62.5C54.5898 62.5 57.5 59.5898 57.5 56C57.5 52.4102 54.5898 49.5 51 49.5C47.4102 49.5 44.5 52.4102 44.5 56C44.5 59.5898 47.4102 62.5 51 62.5Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M31.5 46.25L44.5 52.75" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M25 49.5C28.5898 49.5 31.5 46.5898 31.5 43C31.5 39.4102 28.5898 36.5 25 36.5C21.4102 36.5 18.5 39.4102 18.5 43C18.5 46.5898 21.4102 49.5 25 49.5Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M44.5 33.25L31.5 39.75" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M51 36.5C54.5898 36.5 57.5 33.5898 57.5 30C57.5 26.4102 54.5898 23.5 51 23.5C47.4102 23.5 44.5 26.4102 44.5 30C44.5 33.5898 47.4102 36.5 51 36.5Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <p class="text-small" style="font-family: 'Kalam', cursive;">Share your scores <br> on Facebook </p>
+                        </div>
+                        <div class="share2">
+                        <svg width="81" height="81" viewBox="0 0 81 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="40.5" cy="40.5" r="40.5" fill="#0E8BFE"/>
+                            <path d="M29.3335 57.5V28.1667" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M58.6668 47.759C48.0002 56.0995 40.0002 39.4185 29.3335 47.759V26.9077C40.0002 18.5672 48.0002 35.2482 58.6668 26.9077V47.759Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                            <p class="text-small" style="font-family: 'Kalam', cursive;">Join the ranking!</p>
+                        </div>
+                    </div>
+                    <div class="input-group mb-2"  style="max-width: 20vw; margin: auto; font-family: 'Kalam', cursive; color: black;">
+                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-2"  style="max-width: 20vw; margin: auto; font-family: 'Kalam', cursive; color: black;">
+                        <input type="text" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="d-grid gap-2" style="max-width: 20vw; margin: auto; font-family: 'Kalam', cursive;">
+                        <button class="btnfind2" type="button">Find Opponent </button>
+                        <a href="">Create Account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right">
+            <div id="time">
+                <svg class="p-1" width="53" height="53" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M26.5 52.375C40.7905 52.375 52.375 40.7905 52.375 26.5C52.375 12.2096 40.7905 0.625 26.5 0.625C12.2096 0.625 0.625 12.2096 0.625 26.5C0.625 40.7905 12.2096 52.375 26.5 52.375ZM29.375 10.6875C29.375 9.0997 28.0879 7.8125 26.5 7.8125C24.9121 7.8125 23.625 9.0997 23.625 10.6875V25.7812C23.625 27.7661 25.2339 29.375 27.2188 29.375H36.5625C38.1504 29.375 39.4375 28.0879 39.4375 26.5C39.4375 24.9121 38.1504 23.625 36.5625 23.625H29.375V10.6875Z" fill="white"/>
+                </svg>
+                <button type="button" class="btn btn-light">0</button>
+                <button type="button" class="btn btn-light">8</button>
+                <span class="span-time">:</span>
+                <button type="button" class="btn btn-light">0</button>
+                <button type="button" class="btn btn-light">8</button>
+                <span class="span-time">:</span>
+                <button type="button" class="btn btn-light">1</button>
+                <button type="button" class="btn btn-light">8</button>
+            </div>
+            <div id="player-score"></div>
+        </div>
+    </div>
+    
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyD65O6yrXH_x_5rCEHJKXktztx8hZoNncA",
+            authDomain: "tictacranking.firebaseapp.com",
+            databaseURL: "https://tictacranking-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "tictacranking",
+            storageBucket: "tictacranking.appspot.com",
+            messagingSenderId: "843988056670",
+            appId: "1:843988056670:web:efe6427d1a38cc58eb52cf",
+            measurementId: "G-6WVK1LTKRV"
+
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="auth.js"></script>
+</body>
+</html>
